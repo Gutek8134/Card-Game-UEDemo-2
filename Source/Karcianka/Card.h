@@ -8,8 +8,13 @@
 
 UENUM()
 enum class EffectType : uint8 {
-	healing,
-	damaging,
+	heal,
+	attack,
+};
+
+UENUM()
+enum class EffectTarget : uint8 {
+	self, ally, enemy,
 };
 
 USTRUCT()
@@ -17,15 +22,35 @@ struct FEffect {
 	GENERATED_BODY()
 
 	EffectType type;
+	
+	EffectTarget target;
+
+	int value;
 };
+
+FEffect FEffectConstructor(EffectType _type, EffectTarget _target, int _value);
+
 
 UCLASS()
 class KARCIANKA_API UCard : public UObject
 {
 	GENERATED_BODY()
-	
+
 public:
-	FString ToString();
+	UCard();
+	UCard(const FString& name, const TArray<FEffect>& effects);
 
 	TArray<FEffect> Effects;
+
+	FString Name = "Some card";
+
+	FString ToString();
+
+
+protected:
+	FString EffectTypeToString(EffectType e);
+	FString EffectTargetToString(EffectTarget e);
+
+	const static TArray<FString> EffectTypeStrings;
+	const static TArray<FString> EffectTargetStrings;
 };
