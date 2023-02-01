@@ -20,6 +20,11 @@ UCard::UCard(const FString& name, const TArray<FEffect>& effects) {
 	this->Effects = effects;
 }
 
+void UCard::SetValues(const FString& name, const TArray<FEffect>& effects) {
+	this->Name = name;
+	this->Effects = effects;
+}
+
 const TArray<FString> UCard::EffectTypeStrings = { "Heal", "Attack" };
 const TArray<FString> UCard::EffectTargetStrings = { "Self", "Ally", "Enemy" };
 
@@ -34,7 +39,7 @@ FString UCard::EffectTargetToString(EffectTarget e) {
 FString UCard::ToString() {
 	FString temp = this->Name + ":\n";
 	for (auto const& e : this->Effects) {
-		temp += EffectTypeToString(e.type) + TEXT(" ") + FString::FromInt(e.value) + "\n";
+		temp += EffectTypeToString(e.type) + TEXT(" ") + EffectTargetToString(e.target) + TEXT(" ") + FString::FromInt(e.value) + "\n";
 	}
 	return temp;
 }

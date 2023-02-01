@@ -40,6 +40,8 @@ public:
 	UCard();
 	UCard(const FString& name, const TArray<FEffect>& effects);
 
+	void SetValues(const FString& name, const TArray<FEffect>& effects);
+
 	TArray<FEffect> Effects;
 
 	FString Name = "Some card";

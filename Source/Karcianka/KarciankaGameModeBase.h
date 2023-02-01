@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Card.h"
 #include "GameFramework/GameModeBase.h"
 #include "KarciankaGameModeBase.generated.h"
 
