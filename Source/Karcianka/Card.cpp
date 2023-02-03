@@ -12,31 +12,37 @@ FEffect FEffectConstructor(EffectType _type, EffectTarget _target, int _value)
 	return temp;
 }
 
-UCard::UCard() {
+ACard::ACard() {
+	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	description = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Description"));
+	description->Text = FText::FromString("Card name:\nLorem Ipsum Something Effect 10");
+	mesh->SetupAttachment(RootComponent);
+	description->SetupAttachment(mesh);
 }
 
-UCard::UCard(const FString& name, const TArray<FEffect>& effects) {
+ACard::ACard(const FString& name, const TArray<FEffect>& effects) {
 	this->Name = name;
 	this->Effects = effects;
 }
 
-void UCard::SetValues(const FString& name, const TArray<FEffect>& effects) {
+void ACard::SetValues(const FString& name, const TArray<FEffect>& effects) {
 	this->Name = name;
 	this->Effects = effects;
+	description->Text = FText::FromString(this->ToString());
 }
 
-const TArray<FString> UCard::EffectTypeStrings = { "Heal", "Attack" };
-const TArray<FString> UCard::EffectTargetStrings = { "Self", "Ally", "Enemy" };
+const TArray<FString> ACard::EffectTypeStrings = { "Heal", "Attack" };
+const TArray<FString> ACard::EffectTargetStrings = { "Self", "Ally", "Enemy" };
 
-FString UCard::EffectTypeToString(EffectType e) {
-	return UCard::EffectTypeStrings[(uint8)e];
+FString ACard::EffectTypeToString(EffectType e) {
+	return ACard::EffectTypeStrings[(uint8)e];
 }
 
-FString UCard::EffectTargetToString(EffectTarget e) {
-	return UCard::EffectTargetStrings[(uint8)e];
+FString ACard::EffectTargetToString(EffectTarget e) {
+	return ACard::EffectTargetStrings[(uint8)e];
 }
 
-FString UCard::ToString() {
+FString ACard::ToString() {
 	FString temp = this->Name + ":\n";
 	for (auto const& e : this->Effects) {
 		temp += EffectTypeToString(e.type) + TEXT(" ") + EffectTargetToString(e.target) + TEXT(" ") + FString::FromInt(e.value) + "\n";

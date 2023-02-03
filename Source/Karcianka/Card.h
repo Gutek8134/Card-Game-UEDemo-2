@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "Components/TextRenderComponent.h"
 #include "Card.generated.h"
 
 UENUM()
@@ -17,7 +18,7 @@ enum class EffectTarget : uint8 {
 	self, ally, enemy,
 };
 
-USTRUCT()
+USTRUCT(BlueprintType)
 struct FEffect {
 	GENERATED_BODY()
 
@@ -31,15 +32,16 @@ struct FEffect {
 FEffect FEffectConstructor(EffectType _type, EffectTarget _target, int _value);
 
 
-UCLASS()
-class KARCIANKA_API UCard : public UObject
+UCLASS(Blueprintable)
+class KARCIANKA_API ACard : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	UCard();
-	UCard(const FString& name, const TArray<FEffect>& effects);
+	ACard();
+	ACard(const FString& name, const TArray<FEffect>& effects);
 
+	UFUNCTION(BlueprintCallable)
 	void SetValues(const FString& name, const TArray<FEffect>& effects);
 
 	TArray<FEffect> Effects;
@@ -55,4 +57,7 @@ protected:
 
 	const static TArray<FString> EffectTypeStrings;
 	const static TArray<FString> EffectTargetStrings;
+
+	UStaticMeshComponent* mesh;
+	UTextRenderComponent* description;
 };

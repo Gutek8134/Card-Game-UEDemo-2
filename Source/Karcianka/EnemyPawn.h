@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Card.h"
+#include "Templates/Tuple.h"
 #include "EnemyPawn.generated.h"
 
 UCLASS()
@@ -25,5 +27,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+protected:
+	UPROPERTY(EditAnywhere, Category="Playstyle")
+	TMap<TSubclassOf<ACard>, uint8> Deck;
 
 };
