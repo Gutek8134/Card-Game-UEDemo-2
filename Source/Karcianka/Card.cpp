@@ -16,7 +16,7 @@ ACard::ACard() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	description = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Description"));
 	description->Text = FText::FromString("Card name:\nLorem Ipsum Something Effect 10");
-	mesh->SetupAttachment(RootComponent);
+	RootComponent = mesh;
 	description->SetupAttachment(mesh);
 }
 

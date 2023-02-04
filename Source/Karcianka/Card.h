@@ -58,6 +58,6 @@ protected:
 	const static TArray<FString> EffectTypeStrings;
 	const static TArray<FString> EffectTargetStrings;
 
-	UStaticMeshComponent* mesh;
-	UTextRenderComponent* description;
+	class UStaticMeshComponent* mesh;
+	class UTextRenderComponent* description;
 };
