@@ -28,6 +28,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
+	UFUNCTION(BlueprintCallable)
+	const TMap<TSubclassOf<ACard>, uint8>& GetHand();
+
 protected:
 	UPROPERTY(EditAnywhere, Category="Playstyle")
 	TMap<TSubclassOf<ACard>, uint8> Deck;

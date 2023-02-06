@@ -42,6 +42,10 @@ FString ACard::EffectTargetToString(EffectTarget e) {
 	return ACard::EffectTargetStrings[(uint8)e];
 }
 
+const TArray<FEffect>& ACard::GetEffects() {
+	return this->Effects;
+}
+
 FString ACard::ToString() {
 	FString temp = this->Name + ":\n";
 	for (auto const& e : this->Effects) {

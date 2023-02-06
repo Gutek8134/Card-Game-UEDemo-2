@@ -7,13 +7,13 @@
 #include "Components/TextRenderComponent.h"
 #include "Card.generated.h"
 
-UENUM()
+UENUM(BlueprintType)
 enum class EffectType : uint8 {
 	heal,
 	attack,
 };
 
-UENUM()
+UENUM(BlueprintType)
 enum class EffectTarget : uint8 {
 	self, ally, enemy,
 };
@@ -22,10 +22,13 @@ USTRUCT(BlueprintType)
 struct FEffect {
 	GENERATED_BODY()
 
+	UPROPERTY(BlueprintReadWrite)
 	EffectType type;
 	
+	UPROPERTY(BlueprintReadWrite)
 	EffectTarget target;
 
+	UPROPERTY(BLueprintReadWrite)
 	int value;
 };
 
@@ -43,6 +46,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetValues(const FString& name, const TArray<FEffect>& effects);
+
+	UFUNCTION(BlueprintCallable)
+		const TArray<FEffect>& GetEffects();
 
 	TArray<FEffect> Effects;
 

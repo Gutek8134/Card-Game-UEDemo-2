@@ -34,3 +34,10 @@ void AEnemyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
+const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetDeck() {
+	return this->Deck;
+}
+
+const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetHand() {
+	return this->Hand;
+}
