@@ -6,7 +6,7 @@
 // Sets default values
 AEnemyPawn::AEnemyPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	HandSize = 5;
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
@@ -17,7 +17,7 @@ AEnemyPawn::AEnemyPawn()
 void AEnemyPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame
@@ -40,4 +40,14 @@ const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetDeck() {
 
 const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetHand() {
 	return this->Hand;
+}
+
+bool AEnemyPawn::HasCardOfType(EffectType type) {
+	for (const auto& [CardType, number] : this->Hand) {
+		auto Card = CardType.GetDefaultObject();
+		for (const auto& effect : Card->GetEffects())
+			if (effect.type == type)
+				return true;
+	}
+	return false;
 }

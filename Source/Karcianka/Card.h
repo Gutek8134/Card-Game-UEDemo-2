@@ -50,6 +50,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		const TArray<FEffect>& GetEffects();
 
+	UFUNCTION(BlueprintCallable)
+		const TArray<EffectTarget> GetPossibleTargets();
+
 	TArray<FEffect> Effects;
 
 	FString Name = "Some card";

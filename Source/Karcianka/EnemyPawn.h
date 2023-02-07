@@ -33,11 +33,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	const TMap<TSubclassOf<ACard>, uint8>& GetHand();
 
+	UFUNCTION(BlueprintCallable)
+		bool HasCardOfType(EffectType type);
+
 protected:
+	//Holds type and number of cards in deck and current hand
 	UPROPERTY(EditAnywhere, Category="Playstyle")
 	TMap<TSubclassOf<ACard>, uint8> Deck;
 	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
 	TMap<TSubclassOf<ACard>, uint8> Hand;
+
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
 	uint8 HandSize;
 	class UStaticMeshComponent* mesh;

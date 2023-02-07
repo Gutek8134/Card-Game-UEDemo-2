@@ -46,6 +46,14 @@ const TArray<FEffect>& ACard::GetEffects() {
 	return this->Effects;
 }
 
+const TArray<EffectTarget> ACard::GetPossibleTargets() {
+	TArray<EffectTarget> t;
+	for (const auto& e : this->Effects) {
+		t.AddUnique(e.target);
+	}
+	return t;
+}
+
 FString ACard::ToString() {
 	FString temp = this->Name + ":\n";
 	for (auto const& e : this->Effects) {
