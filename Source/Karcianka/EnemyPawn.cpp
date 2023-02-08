@@ -43,6 +43,9 @@ const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetHand() {
 }
 
 bool AEnemyPawn::HasCardOfType(EffectType type) {
+	//Iterates over all cards and gets the defaults
+	//if the default card contains an effect of type, returns true
+	//else returns false after iterating over all card types in hand
 	for (const auto& [CardType, number] : this->Hand) {
 		auto Card = CardType.GetDefaultObject();
 		for (const auto& effect : Card->GetEffects())
@@ -50,4 +53,38 @@ bool AEnemyPawn::HasCardOfType(EffectType type) {
 				return true;
 	}
 	return false;
+}
+
+void AEnemyPawn::Attack() {
+	//TODO: after creating player class, change to Receive Damage call or similar
+	auto playerState = GetWorld()->GetFirstPlayerController()->GetPlayerState<AMyPlayerState>();
+	if (playerState == NULL) {
+		UE_LOG(LogTemp, Error, TEXT("Player state is null"));
+		return;
+	}
+	
+	TArray<TSubclassOf<ACard>> keys;
+	this->Hand.GetKeys(keys);
+	ACard* BestCard = NULL;
+	for (auto const& key : keys) {
+		auto card = key.GetDefaultObject();
+		if (card->IsOfType(EffectType::attack)) {
+			if (BestCard == NULL) {
+				BestCard = card;
+			}
+			else if (BestCard->GetSumaricEffects(EffectType::attack) < card->GetSumaricEffects(EffectType::attack)) {
+				BestCard = card;
+			}
+		}
+	}
+	playerState->SetHP(playerState->GetHP() - BestCard->GetSumaricEffects(EffectType::attack));
+	auto BestCardClass = BestCard->StaticClass();
+	--Hand[BestCardClass];
+	if (Hand[BestCardClass] == 0) {
+		Hand.Remove(BestCardClass);
+	}
+}
+
+void AEnemyPawn::Heal() {
+	
 }

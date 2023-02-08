@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Card.h"
-#include "Templates/Tuple.h"
+#include "MyPlayerState.h"
 #include "EnemyPawn.generated.h"
 
 UCLASS()
@@ -35,6 +35,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		bool HasCardOfType(EffectType type);
+
+	UFUNCTION(BlueprintCallable)
+		void Heal();
+
+	UFUNCTION(BlueprintCallable)
+		void Attack();
 
 protected:
 	//Holds type and number of cards in deck and current hand

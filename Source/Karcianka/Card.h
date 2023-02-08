@@ -53,6 +53,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 		const TArray<EffectTarget> GetPossibleTargets();
 
+	UFUNCTION(BlueprintCallable)
+		bool IsOfType(EffectType type);
+
+	UFUNCTION(BlueprintCallable)
+		bool CanBeUsedOn(EffectTarget target);
+
+	UFUNCTION(BlueprintCallable)
+		int GetSumaricEffects(EffectType type);
+
 	TArray<FEffect> Effects;
 
 	FString Name = "Some card";

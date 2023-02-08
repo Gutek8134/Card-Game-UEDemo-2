@@ -54,6 +54,29 @@ const TArray<EffectTarget> ACard::GetPossibleTargets() {
 	return t;
 }
 
+bool ACard::IsOfType(EffectType type) {
+	for (const auto& effect : this->Effects)
+		if (effect.type == type)
+			return true;
+	return false;
+}
+
+bool ACard::CanBeUsedOn(EffectTarget target) {
+	for (const auto& effect : this->Effects)
+		if (effect.target == target)
+			return true;
+	return false;
+}
+
+int ACard::GetSumaricEffects(EffectType type) {
+	int t = 0;
+	for (const auto& effect : this->Effects) {
+		if (effect.type == type)
+			t += effect.value;
+	}
+	return t;
+}
+
 FString ACard::ToString() {
 	FString temp = this->Name + ":\n";
 	for (auto const& e : this->Effects) {
