@@ -55,6 +55,16 @@ bool AEnemyPawn::HasCardOfType(EffectType type) {
 	return false;
 }
 
+int AEnemyPawn::GetHP() {
+	return this->hp;
+}
+int AEnemyPawn::GetMaxHP() {
+	return this->maxHP;
+}
+void AEnemyPawn::ReceiveDamage(const uint8& damage) {
+	this->hp -= damage;
+}
+
 void AEnemyPawn::Attack() {
 	//TODO: after creating player class, change to Receive Damage call or similar
 	auto playerState = GetWorld()->GetFirstPlayerController()->GetPlayerState<AMyPlayerState>();
@@ -62,11 +72,11 @@ void AEnemyPawn::Attack() {
 		UE_LOG(LogTemp, Error, TEXT("Player state is null"));
 		return;
 	}
-	
+
 	TArray<TSubclassOf<ACard>> keys;
 	this->Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
-	for (auto const& key : keys) {
+	for (const auto& key : keys) {
 		auto card = key.GetDefaultObject();
 		if (card->IsOfType(EffectType::attack)) {
 			if (BestCard == NULL) {
@@ -86,5 +96,24 @@ void AEnemyPawn::Attack() {
 }
 
 void AEnemyPawn::Heal() {
-	
+	TArray<TSubclassOf<ACard>> keys;
+	this->Hand.GetKeys(keys);
+	ACard* BestCard = NULL;
+	for (const auto& key : keys) {
+		auto card = key.GetDefaultObject();
+		if (card->IsOfType(EffectType::heal)) {
+			if (BestCard == NULL) {
+				BestCard = card;
+			}
+			else if (abs(this->maxHP - this->hp - BestCard->GetSumaricEffects(EffectType::heal)) > abs(this->maxHP - this->hp - card->GetSumaricEffects(EffectType::heal))) {
+				BestCard = card;
+			}
+		}
+	}
+	this->hp += BestCard->GetSumaricEffects(EffectType::heal);
+	auto BestCardClass = BestCard->StaticClass();
+	--Hand[BestCardClass];
+	if (Hand[BestCardClass] == 0) {
+		Hand.Remove(BestCardClass);
+	}
 }

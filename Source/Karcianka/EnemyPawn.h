@@ -6,10 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "Card.h"
 #include "MyPlayerState.h"
+#include "FightInterface.h"
 #include "EnemyPawn.generated.h"
 
 UCLASS()
-class KARCIANKA_API AEnemyPawn : public APawn
+class KARCIANKA_API AEnemyPawn : public APawn, public IFight
 {
 	GENERATED_BODY()
 
@@ -21,7 +22,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -29,9 +30,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
+		const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
 	UFUNCTION(BlueprintCallable)
-	const TMap<TSubclassOf<ACard>, uint8>& GetHand();
+		const TMap<TSubclassOf<ACard>, uint8>& GetHand();
 
 	UFUNCTION(BlueprintCallable)
 		bool HasCardOfType(EffectType type);
@@ -42,14 +43,28 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void Attack();
 
+	UFUNCTION(BlueprintCallable)
+		int GetHP();
+
+	UFUNCTION(BlueprintCallable)
+		int GetMaxHP();
+
+	UFUNCTION(BlueprintCallable)
+		virtual void ReceiveDamage(const uint8& damage) override;
+
 protected:
 	//Holds type and number of cards in deck and current hand
-	UPROPERTY(EditAnywhere, Category="Playstyle")
-	TMap<TSubclassOf<ACard>, uint8> Deck;
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		TMap<TSubclassOf<ACard>, uint8> Deck;
 	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
-	TMap<TSubclassOf<ACard>, uint8> Hand;
+		TMap<TSubclassOf<ACard>, uint8> Hand;
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
-	uint8 HandSize;
+		uint8 HandSize;
 	class UStaticMeshComponent* mesh;
+
+	UPROPERTY(EditAnywhere, Category = "Stats")
+		int hp;
+	UPROPERTY(EditAnywhere, Category = "Stats")
+		int maxHP;
 };
