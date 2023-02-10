@@ -9,8 +9,51 @@
 #include "FightInterface.h"
 #include "EnemyPawn.generated.h"
 
+UCLASS(MinimalAPI, NotBlueprintable)
+class ACardPawn : public APawn, public IFight {
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable)
+		const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
+	UFUNCTION(BlueprintCallable)
+		const TMap<TSubclassOf<ACard>, uint8>& GetHand();
+
+	UFUNCTION(BlueprintCallable)
+		bool HasCardOfType(EffectType type);
+
+	UFUNCTION(BlueprintCallable)
+		virtual void Heal();
+
+	UFUNCTION(BlueprintCallable)
+		virtual void Attack();
+
+	UFUNCTION(BlueprintCallable)
+		virtual void ReceiveDamage(const uint8& damage) override;
+
+	UFUNCTION(BlueprintCallable)
+		int GetHP();
+
+	UFUNCTION(BlueprintCallable)
+		int GetMaxHP();
+
+protected:
+	UPROPERTY(EditAnywhere, Category = "Stats")
+		int hp;
+	UPROPERTY(EditAnywhere, Category = "Stats")
+		int maxHP;
+
+	//Holds type and number of cards in deck and current hand
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		TMap<TSubclassOf<ACard>, uint8> Deck;
+	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
+		TMap<TSubclassOf<ACard>, uint8> Hand;
+
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		uint8 HandSize;
+};
+
 UCLASS()
-class KARCIANKA_API AEnemyPawn : public APawn, public IFight
+class KARCIANKA_API AEnemyPawn : public ACardPawn
 {
 	GENERATED_BODY()
 
@@ -29,42 +72,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintCallable)
-		const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
-	UFUNCTION(BlueprintCallable)
-		const TMap<TSubclassOf<ACard>, uint8>& GetHand();
+	virtual void Heal() override;
 
-	UFUNCTION(BlueprintCallable)
-		bool HasCardOfType(EffectType type);
+	virtual void Attack() override;
 
-	UFUNCTION(BlueprintCallable)
-		void Heal();
-
-	UFUNCTION(BlueprintCallable)
-		void Attack();
-
-	UFUNCTION(BlueprintCallable)
-		int GetHP();
-
-	UFUNCTION(BlueprintCallable)
-		int GetMaxHP();
-
-	UFUNCTION(BlueprintCallable)
-		virtual void ReceiveDamage(const uint8& damage) override;
+	virtual void ReceiveDamage(const uint8& damage) override;
 
 protected:
-	//Holds type and number of cards in deck and current hand
-	UPROPERTY(EditAnywhere, Category = "Playstyle")
-		TMap<TSubclassOf<ACard>, uint8> Deck;
-	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
-		TMap<TSubclassOf<ACard>, uint8> Hand;
-
-	UPROPERTY(EditAnywhere, Category = "Playstyle")
-		uint8 HandSize;
 	class UStaticMeshComponent* mesh;
-
-	UPROPERTY(EditAnywhere, Category = "Stats")
-		int hp;
-	UPROPERTY(EditAnywhere, Category = "Stats")
-		int maxHP;
 };

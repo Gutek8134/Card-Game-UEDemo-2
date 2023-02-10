@@ -7,7 +7,7 @@
 #include "FightInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, NotBlueprintable)
 class UFight : public UInterface
 {
 	GENERATED_BODY()
@@ -23,5 +23,5 @@ class KARCIANKA_API IFight
 		// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintCallable)
-		virtual void ReceiveDamage(const uint8& damage);
+		virtual void ReceiveDamage(const uint8& damage) = 0;
 };

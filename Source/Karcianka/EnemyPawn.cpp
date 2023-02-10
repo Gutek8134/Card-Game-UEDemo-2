@@ -34,35 +34,8 @@ void AEnemyPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
-const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetDeck() {
-	return this->Deck;
-}
-
-const TMap<TSubclassOf<ACard>, uint8>& AEnemyPawn::GetHand() {
-	return this->Hand;
-}
-
-bool AEnemyPawn::HasCardOfType(EffectType type) {
-	//Iterates over all cards and gets the defaults
-	//if the default card contains an effect of type, returns true
-	//else returns false after iterating over all card types in hand
-	for (const auto& [CardType, number] : this->Hand) {
-		auto Card = CardType.GetDefaultObject();
-		for (const auto& effect : Card->GetEffects())
-			if (effect.type == type)
-				return true;
-	}
-	return false;
-}
-
-int AEnemyPawn::GetHP() {
-	return this->hp;
-}
-int AEnemyPawn::GetMaxHP() {
-	return this->maxHP;
-}
 void AEnemyPawn::ReceiveDamage(const uint8& damage) {
-	this->hp -= damage;
+	hp -= damage;
 }
 
 void AEnemyPawn::Attack() {
@@ -74,7 +47,7 @@ void AEnemyPawn::Attack() {
 	}
 
 	TArray<TSubclassOf<ACard>> keys;
-	this->Hand.GetKeys(keys);
+	Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
 	for (const auto& key : keys) {
 		auto card = key.GetDefaultObject();
@@ -97,7 +70,7 @@ void AEnemyPawn::Attack() {
 
 void AEnemyPawn::Heal() {
 	TArray<TSubclassOf<ACard>> keys;
-	this->Hand.GetKeys(keys);
+	Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
 	for (const auto& key : keys) {
 		auto card = key.GetDefaultObject();
@@ -105,7 +78,7 @@ void AEnemyPawn::Heal() {
 			if (BestCard == NULL) {
 				BestCard = card;
 			}
-			else if (abs(this->maxHP - this->hp - BestCard->GetSumaricEffects(EffectType::heal)) > abs(this->maxHP - this->hp - card->GetSumaricEffects(EffectType::heal))) {
+			else if (abs(maxHP - hp - BestCard->GetSumaricEffects(EffectType::heal)) > abs(maxHP - hp - card->GetSumaricEffects(EffectType::heal))) {
 				BestCard = card;
 			}
 		}
@@ -116,4 +89,44 @@ void AEnemyPawn::Heal() {
 	if (Hand[BestCardClass] == 0) {
 		Hand.Remove(BestCardClass);
 	}
+}
+
+const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetDeck() {
+	return this->Deck;
+}
+
+const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetHand() {
+	return this->Hand;
+}
+
+bool ACardPawn::HasCardOfType(EffectType type) {
+	//Iterates over all cards and gets the defaults
+	//if the default card contains an effect of type, returns true
+	//else returns false after iterating over all card types in hand
+	for (const auto& [CardType, number] : this->Hand) {
+		auto Card = CardType.GetDefaultObject();
+		for (const auto& effect : Card->GetEffects())
+			if (effect.type == type)
+				return true;
+	}
+	return false;
+}
+
+int ACardPawn::GetHP() {
+	return hp;
+}
+int ACardPawn::GetMaxHP() {
+	return maxHP;
+}
+
+void ACardPawn::Heal() {
+	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+}
+
+void ACardPawn::Attack() {
+	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+}
+
+void ACardPawn::ReceiveDamage(const uint8& damage) {
+	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
