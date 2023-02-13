@@ -5,36 +5,10 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Components/TextRenderComponent.h"
+#include "FEffect.h"
 #include "Card.generated.h"
 
-UENUM(BlueprintType)
-enum class EffectType : uint8 {
-	heal,
-	attack,
-};
-
-UENUM(BlueprintType)
-enum class EffectTarget : uint8 {
-	self, ally, enemy,
-};
-
-USTRUCT(BlueprintType)
-struct FEffect {
-	GENERATED_BODY()
-
-	UPROPERTY(BlueprintReadWrite)
-	EffectType type;
-	
-	UPROPERTY(BlueprintReadWrite)
-	EffectTarget target;
-
-	UPROPERTY(BLueprintReadWrite)
-	int value;
-};
-
-FEffect FEffectConstructor(EffectType _type, EffectTarget _target, int _value);
-
-
+//Base class to be blueprinted into specific cards
 UCLASS(Blueprintable)
 class KARCIANKA_API ACard : public AActor
 {
@@ -45,7 +19,7 @@ public:
 	ACard(const FString& name, const TArray<FEffect>& effects);
 
 	UFUNCTION(BlueprintCallable)
-	void SetValues(const FString& name, const TArray<FEffect>& effects);
+		void SetValues(const FString& name, const TArray<FEffect>& effects);
 
 	UFUNCTION(BlueprintCallable)
 		const TArray<FEffect>& GetEffects();
@@ -62,14 +36,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		int GetSumaricEffects(EffectType type);
 
-	TArray<FEffect> Effects;
-
 	FString Name = "Some card";
 
+	//Auto-description
 	FString ToString();
 
-
 protected:
+	//Effects the card applies when played
+	TArray<FEffect> Effects;
 	FString EffectTypeToString(EffectType e);
 	FString EffectTargetToString(EffectTarget e);
 

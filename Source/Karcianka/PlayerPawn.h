@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EnemyPawn.h"
+#include "Card.h"
 #include "PlayerPawn.generated.h"
 
 UCLASS()
@@ -11,6 +12,7 @@ class KARCIANKA_API APlayerPawn : public ACardPawn
 {
 	GENERATED_BODY()
 
+		DECLARE_DELEGATE(VoidDelegate)
 public:
 	// Sets default values for this pawn's properties
 	APlayerPawn();
@@ -26,11 +28,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void Heal();
+	virtual void Heal(const uint8& value);
 
-	virtual void Attack();
+	UFUNCTION(BlueprintCallable)
+		virtual void ReceiveDamage(const uint8& damage) override;
 
-	virtual void ReceiveDamage(const uint8& damage) override;
+	virtual void UpdateHealthBar() override;
+
+	VoidDelegate Die;
 
 protected:
 	class UStaticMeshComponent* mesh;

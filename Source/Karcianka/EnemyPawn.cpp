@@ -38,7 +38,7 @@ void AEnemyPawn::ReceiveDamage(const uint8& damage) {
 	hp -= damage;
 }
 
-void AEnemyPawn::Attack() {
+void AEnemyPawn::AutoAttack() {
 	//TODO: after creating player class, change to Receive Damage call or similar
 	auto playerState = GetWorld()->GetFirstPlayerController()->GetPlayerState<AMyPlayerState>();
 	if (playerState == NULL) {
@@ -68,7 +68,7 @@ void AEnemyPawn::Attack() {
 	}
 }
 
-void AEnemyPawn::Heal() {
+void AEnemyPawn::AutoHeal() {
 	TArray<TSubclassOf<ACard>> keys;
 	Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
@@ -83,12 +83,16 @@ void AEnemyPawn::Heal() {
 			}
 		}
 	}
-	this->hp += BestCard->GetSumaricEffects(EffectType::heal);
+	Play(BestCard, this);
 	auto BestCardClass = BestCard->StaticClass();
 	--Hand[BestCardClass];
 	if (Hand[BestCardClass] == 0) {
 		Hand.Remove(BestCardClass);
 	}
+}
+
+void AEnemyPawn::UpdateHealthBar() {
+
 }
 
 const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetDeck() {
@@ -119,11 +123,32 @@ int ACardPawn::GetMaxHP() {
 	return maxHP;
 }
 
-void ACardPawn::Heal() {
+void ACardPawn::Play(ACard* card, ACardPawn* target) {
+	for (const auto& effect : card->GetEffects()) {
+		switch (effect.type) {
+		case EffectType::attack:
+			target->ReceiveDamage(effect.value);
+			break;
+		case EffectType::heal:
+			target->Heal(effect.value);
+			break;
+		}
+	}
+}
+
+void ACardPawn::AutoHeal() {
 	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
 
-void ACardPawn::Attack() {
+void ACardPawn::AutoAttack() {
+	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+}
+
+void ACardPawn::Heal(const uint8& damage) {
+	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+}
+
+void ACardPawn::UpdateHealthBar() {
 	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
 

@@ -3,15 +3,6 @@
 
 #include "Card.h"
 
-FEffect FEffectConstructor(EffectType _type, EffectTarget _target, int _value)
-{
-	FEffect temp;
-	temp.type = _type;
-	temp.target = _target;
-	temp.value = _value;
-	return temp;
-}
-
 ACard::ACard() {
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	description = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Description"));
