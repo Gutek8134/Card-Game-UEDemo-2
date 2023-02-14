@@ -7,6 +7,7 @@
 #include "Card.h"
 #include "MyPlayerState.h"
 #include "FightInterface.h"
+#include "Components/WidgetComponent.h"
 #include "EnemyPawn.generated.h"
 
 //Base, theoretically abstract, class for pawns using cards
@@ -67,6 +68,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
 		uint8 HandSize;
+
+	UPROPERTY(EditAnywhere, Category = "Graphics")
+		class UStaticMeshComponent* mesh;
+
+	UPROPERTY(EditAnywhere, Category = "Graphics")
+		class UWidgetComponent* canvas;
 };
 
 UCLASS()
@@ -97,6 +104,4 @@ public:
 
 	virtual void UpdateHealthBar() override;
 
-protected:
-	class UStaticMeshComponent* mesh;
 };

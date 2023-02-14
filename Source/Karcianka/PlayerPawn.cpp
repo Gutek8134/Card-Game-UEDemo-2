@@ -9,6 +9,10 @@ APlayerPawn::APlayerPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
+	RootComponent = mesh;
+	canvas = CreateDefaultSubobject<UWidgetComponent>(TEXT("canvas"));
+	canvas->SetupAttachment(mesh);
+	canvas->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 // Called when the game starts or when spawned

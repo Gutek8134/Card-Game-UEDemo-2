@@ -11,6 +11,9 @@ AEnemyPawn::AEnemyPawn()
 	HandSize = 5;
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = mesh;
+	canvas = CreateDefaultSubobject<UWidgetComponent>(TEXT("canvas"));
+	canvas->SetupAttachment(mesh);
+	canvas->SetWidgetSpace(EWidgetSpace::Screen);
 }
 
 // Called when the game starts or when spawned

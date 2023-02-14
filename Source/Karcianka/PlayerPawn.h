@@ -36,7 +36,4 @@ public:
 	virtual void UpdateHealthBar() override;
 
 	VoidDelegate Die;
-
-protected:
-	class UStaticMeshComponent* mesh;
 };
