@@ -50,6 +50,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual void UpdateHealthBar();
 
+	UFUNCTION(BlueprintCallable)
+		void StartFight();
+
+	UFUNCTION(BlueprintCallable)
+		void DrawCards(const uint8& number);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats")
 		int hp;
@@ -62,12 +68,20 @@ protected:
 	//Holds type and number of cards in deck
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Deck;
+
+	//Holds the current stack of cards from which player can draw
+	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
+		TMap<TSubclassOf<ACard>, uint8> Stack;
+
 	//Holds type and number of cards in current hand
 	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Hand;
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
 		uint8 HandSize;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Playstyle")
+		int32 StackWeight;
 
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class UStaticMeshComponent* mesh;

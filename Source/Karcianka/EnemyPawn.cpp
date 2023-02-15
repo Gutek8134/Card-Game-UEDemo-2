@@ -2,6 +2,7 @@
 
 
 #include "EnemyPawn.h"
+#include <random>
 
 // Sets default values
 AEnemyPawn::AEnemyPawn()
@@ -104,6 +105,45 @@ const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetDeck() {
 
 const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetHand() {
 	return this->Hand;
+}
+
+// number - of cards to draw
+void ACardPawn::DrawCards(const uint8& number) {
+	
+	// Repeated for number of times
+	for (auto i = 0; i < number; ++i) {
+		// Generates uniformly distributed number in <0, number of cards in stack>
+		auto rnd = (uint8)FMath::RandRange(0, StackWeight);
+
+		// Gets card dictated by random number and adds it to Hand
+		for (const auto& [key, value] : Stack) {
+			if (rnd <= value) {
+				++Hand[key];
+				--Stack[key];
+				break;
+			}
+			else rnd -= value;
+		}
+
+		//If there are no more cards in stack, discarded cards are put back
+		if (--StackWeight == 0) {
+			Stack.Empty();
+			Stack = Deck;
+			for (const auto& [key, value] : Hand) Stack[key] -= value;
+		}
+	}
+}
+
+void ACardPawn::StartFight() {
+	// Empties stack of cards, then fills it with deck values
+	Stack.Empty();
+	Stack = Deck;
+
+	// Calculates cumulative weight of stack for drawing
+	TArray<uint8> weights;
+	Stack.GenerateValueArray(weights);
+	StackWeight = 0;
+	for (const auto& e : weights) StackWeight += e;
 }
 
 bool ACardPawn::HasCardOfType(EffectType type) {
