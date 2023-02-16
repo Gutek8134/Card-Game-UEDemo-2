@@ -4,10 +4,12 @@
 #include "Card.h"
 
 ACard::ACard() {
+	root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	description = CreateDefaultSubobject<UTextRenderComponent>(TEXT("Description"));
 	description->Text = FText::FromString("Card name:\nLorem Ipsum Something Effect 10");
-	RootComponent = mesh;
+	RootComponent = root;
+	mesh->SetupAttachment(RootComponent);
 	description->SetupAttachment(mesh);
 }
 
@@ -70,8 +72,18 @@ int ACard::GetSumaricEffects(EffectType type) {
 
 FString ACard::ToString() {
 	FString temp = this->Name + ":\n";
-	for (auto const& e : this->Effects) {
-		temp += EffectTypeToString(e.type) + TEXT(" ") + EffectTargetToString(e.target) + TEXT(" ") + FString::FromInt(e.value) + "\n";
+	TArray<TPair<FEffect, uint8>> count;
+
+	FEffect previous = Effects[0];
+	auto number = 0;
+	for (const auto& effect : Effects) {
+		if (effect != previous) {
+			temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + (number == 1 ? "" : (FString::FromInt(previous.value) + " X " + FString::FromInt(number))) + "\n";
+			number = 0;
+		}
+		number++;
+		previous = effect;
 	}
+	temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + FString::FromInt(previous.value) + " X " + FString::FromInt(number) + "\n";
 	return temp;
 }

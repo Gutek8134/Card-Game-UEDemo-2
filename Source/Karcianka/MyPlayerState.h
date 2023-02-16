@@ -21,6 +21,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetHP(int hp);
 
+protected:
 	UPROPERTY(EditDefaultsOnly)
 	int HP=100;
 };

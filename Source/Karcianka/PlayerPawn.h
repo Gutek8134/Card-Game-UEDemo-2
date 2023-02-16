@@ -7,7 +7,7 @@
 #include "Card.h"
 #include "PlayerPawn.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class KARCIANKA_API APlayerPawn : public ACardPawn
 {
 	GENERATED_BODY()

@@ -12,7 +12,7 @@ enum class EffectType : uint8 {
 
 UENUM(BlueprintType)
 enum class EffectTarget : uint8 {
-	self, ally, enemy,
+	self, ally, enemy, any
 };
 
 USTRUCT(BlueprintType)
@@ -36,6 +36,10 @@ struct FEffect {
 
 	bool operator== (const FEffect& other) const {
 		return Equals(other);
+	}
+
+	bool operator!= (const FEffect& other) const {
+		return !Equals(other);
 	}
 
 	bool Equals(const FEffect& other) const {

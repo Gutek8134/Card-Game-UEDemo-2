@@ -50,6 +50,10 @@ protected:
 	const static TArray<FString> EffectTypeStrings;
 	const static TArray<FString> EffectTargetStrings;
 
-	class UStaticMeshComponent* mesh;
-	class UTextRenderComponent* description;
+	UPROPERTY(EditAnywhere, Category = "Graphics")
+		class USceneComponent* root;
+	UPROPERTY(EditAnywhere, Category = "Graphics")
+		class UStaticMeshComponent* mesh;
+	UPROPERTY(EditAnywhere, Category = "Graphics")
+		class UTextRenderComponent* description;
 };
