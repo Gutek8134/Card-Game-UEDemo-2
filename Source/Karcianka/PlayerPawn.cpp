@@ -49,7 +49,3 @@ void APlayerPawn::ReceiveDamage(const uint8& damage) {
 		Die.ExecuteIfBound();
 	UpdateHealthBar();
 }
-
-void APlayerPawn::UpdateHealthBar() {
-	//TODO
-}

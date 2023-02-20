@@ -33,7 +33,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual void ReceiveDamage(const uint8& damage) override;
 
-	virtual void UpdateHealthBar() override;
-
 	VoidDelegate Die;
 };
