@@ -78,12 +78,12 @@ FString ACard::ToString() {
 	auto number = 0;
 	for (const auto& effect : Effects) {
 		if (effect != previous) {
-			temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + (number == 1 ? "" : (FString::FromInt(previous.value) + " X " + FString::FromInt(number))) + "\n";
+			temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + FString::FromInt(previous.value) + (number == 1 ? "" : (" X " + FString::FromInt(number))) + "\n";
 			number = 0;
 		}
 		number++;
 		previous = effect;
 	}
-	temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + FString::FromInt(previous.value) + " X " + FString::FromInt(number) + "\n";
+	temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + FString::FromInt(previous.value) + (number == 1 ? "" : (" X " + FString::FromInt(number))) + "\n";
 	return temp;
 }
