@@ -22,7 +22,12 @@ void ACardPawn::DrawCards(const uint8& number) {
 		// Gets card dictated by random number and adds it to Hand
 		for (const auto& [key, value] : Stack) {
 			if (rnd <= value) {
-				++Hand[key];
+				if (Hand.Contains(key))
+					++Hand[key];
+				else {
+					Hand.Add(key);
+					Hand[key] = 1;
+				}
 				--Stack[key];
 				break;
 			}
@@ -48,6 +53,8 @@ void ACardPawn::StartFight() {
 	Stack.GenerateValueArray(weights);
 	StackWeight = 0;
 	for (const auto& e : weights) StackWeight += e;
+
+	DrawCards(HandSize);
 }
 
 bool ACardPawn::HasCardOfType(EffectType type) {
