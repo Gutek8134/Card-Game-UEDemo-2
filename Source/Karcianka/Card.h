@@ -39,6 +39,7 @@ public:
 	FString Name = "Some card";
 
 	//Auto-description
+	UFUNCTION(BlueprintCallable)
 	FString ToString();
 
 protected:
@@ -54,6 +55,6 @@ protected:
 		class USceneComponent* root;
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class UStaticMeshComponent* mesh;
-	UPROPERTY(EditAnywhere, Category = "Graphics")
+	UPROPERTY(BlueprintReadWrite, Category = "Graphics")
 		class UTextRenderComponent* description;
 };
