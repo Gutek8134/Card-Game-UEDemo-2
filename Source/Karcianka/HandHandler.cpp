@@ -21,7 +21,7 @@ void AHandHandler::PositionCards() {
 	}
 	else
 	{
-		position = -stepBase * PlacedCards.Num() * GetActorScale().Y;
+		position = -stepBase / 2 * PlacedCards.Num() * GetActorScale().Y + stepBase/2;
 	}
 
 	for (auto i = 0; i < PlacedCards.Num(); ++i) {
