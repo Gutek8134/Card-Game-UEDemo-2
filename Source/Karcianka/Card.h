@@ -53,8 +53,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class USceneComponent* root;
-	UPROPERTY(EditAnywhere, Category = "Graphics")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Graphics")
 		class UStaticMeshComponent* mesh;
-	UPROPERTY(BlueprintReadWrite, Category = "Graphics")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Graphics")
 		class UTextRenderComponent* description;
 };
