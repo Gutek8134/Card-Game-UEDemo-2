@@ -15,7 +15,7 @@ const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetHand() {
 void ACardPawn::DrawCards(const uint8& number) {
 
 	// Repeated for number of times
-	for (auto i = 0; i < number; ++i) {
+	for (uint8 i = 0; i < number; i++) {
 		// Generates uniformly distributed number in <0, number of cards in stack>
 		auto rnd = (uint8)FMath::RandRange(0, StackWeight);
 
@@ -23,12 +23,12 @@ void ACardPawn::DrawCards(const uint8& number) {
 		for (const auto& [key, value] : Stack) {
 			if (rnd <= value) {
 				if (Hand.Contains(key))
-					++Hand[key];
+					Hand[key] += 1;
 				else {
 					Hand.Add(key);
 					Hand[key] = 1;
 				}
-				--Stack[key];
+				Stack[key] -= 1;
 				break;
 			}
 			else rnd -= value;
@@ -88,6 +88,11 @@ void ACardPawn::Play(ACard* card, ACardPawn* target) {
 			break;
 		}
 	}
+
+	UClass* cardClass = card->GetClass();
+	Hand[cardClass] -= 1;
+	if (Hand[cardClass] <= 0)
+		Hand.Remove(cardClass);
 }
 
 void ACardPawn::UpdateHealthBar() {
@@ -106,17 +111,17 @@ void ACardPawn::SetProgressBar(UProgressBar* progressBar) {
 }
 
 void ACardPawn::AutoHeal() {
-	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+	UE_LOG(LogTemp, Error, TEXT("AutoHeal: Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
 
 void ACardPawn::AutoAttack() {
-	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+	UE_LOG(LogTemp, Error, TEXT("AutoAttack: Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
 
 void ACardPawn::Heal(const uint8& damage) {
-	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+	UE_LOG(LogTemp, Error, TEXT("Heal: Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }
 
 void ACardPawn::ReceiveDamage(const uint8& damage) {
-	UE_LOG(LogTemp, Error, TEXT("Don't use ACardPawn by itself, it's supposed to be abstract class"));
+	UE_LOG(LogTemp, Error, TEXT("Receive Damage: Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }

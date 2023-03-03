@@ -84,7 +84,7 @@ protected:
 		TMap<TSubclassOf<ACard>, uint8> Hand;
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
-		uint8 HandSize;
+		uint8 HandSize=5;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Playstyle")
 		int32 StackWeight;
