@@ -55,6 +55,7 @@ void ACardPawn::StartFight() {
 	for (const auto& e : weights) StackWeight += e;
 
 	DrawCards(HandSize);
+	UE_LOG(LogTemp, Warning, TEXT("%s"), HasCardOfType(EffectType::attack) ? *FString("Has attack card") : *FString("Doesn't have attack card"))
 }
 
 bool ACardPawn::HasCardOfType(EffectType type) {
@@ -62,10 +63,12 @@ bool ACardPawn::HasCardOfType(EffectType type) {
 	//if the default card contains an effect of type, returns true
 	//else returns false after iterating over all card types in hand
 	for (const auto& [CardType, number] : this->Hand) {
-		auto Card = CardType.GetDefaultObject();
-		for (const auto& effect : Card->GetEffects())
-			if (effect.type == type)
-				return true;
+		ACard* Card = CardType.GetDefaultObject();
+		Card->OnConstruction(Card->GetTransform());
+		bool isOfType = Card->IsOfType(type);
+		UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *Card->GetFName().ToString(), isOfType ? *FString("It's an attack card") : *FString("It's not an attack card"));
+		if (isOfType)
+			return true;
 	}
 	return false;
 }
@@ -88,6 +91,7 @@ void ACardPawn::Play(ACard* card, ACardPawn* target) {
 			break;
 		}
 	}
+	target->UpdateHealthBar();
 
 	UClass* cardClass = card->GetClass();
 	Hand[cardClass] -= 1;
@@ -99,7 +103,7 @@ void ACardPawn::UpdateHealthBar() {
 	if (ProgressBar == NULL)
 		return;
 
-	ProgressBar->SetPercent(hp / maxHP);
+	ProgressBar->SetPercent((float)hp / (float)maxHP);
 }
 
 UProgressBar* ACardPawn::GetProgressBar() {

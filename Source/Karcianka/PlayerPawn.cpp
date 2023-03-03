@@ -40,12 +40,10 @@ void APlayerPawn::Heal(const uint8& value) {
 	hp += value;
 	if (hp > maxHP)
 		hp = maxHP;
-	UpdateHealthBar();
 }
 
 void APlayerPawn::ReceiveDamage(const uint8& damage) {
 	hp -= damage;
 	if (hp <= 0)
 		Die.ExecuteIfBound();
-	UpdateHealthBar();
 }

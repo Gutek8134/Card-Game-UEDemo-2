@@ -42,10 +42,9 @@ void AEnemyPawn::ReceiveDamage(const uint8& damage) {
 }
 
 void AEnemyPawn::AutoAttack() {
-	//TODO: after creating player class, change to Receive Damage call or similar
-	auto playerState = GetWorld()->GetFirstPlayerController()->GetPlayerState<AMyPlayerState>();
-	if (playerState == NULL) {
-		UE_LOG(LogTemp, Error, TEXT("Player state is null"));
+	auto playerPawn = GetWorld()->GetFirstPlayerController()->GetOwner<ACardPawn>();
+	if (playerPawn == NULL) {
+		UE_LOG(LogTemp, Error, TEXT("Player is null"));
 		return;
 	}
 
@@ -63,12 +62,13 @@ void AEnemyPawn::AutoAttack() {
 			}
 		}
 	}
-	playerState->SetHP(playerState->GetHP() - BestCard->GetSumaricEffects(EffectType::attack));
+	playerPawn->ReceiveDamage(BestCard->GetSumaricEffects(EffectType::attack));
 	auto BestCardClass = BestCard->StaticClass();
-	--Hand[BestCardClass];
+	Hand[BestCardClass]-=1;
 	if (Hand[BestCardClass] == 0) {
 		Hand.Remove(BestCardClass);
 	}
+	playerPawn->UpdateHealthBar();
 }
 
 void AEnemyPawn::AutoHeal() {

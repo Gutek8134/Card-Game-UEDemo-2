@@ -44,6 +44,7 @@ public:
 
 protected:
 	//Effects the card applies when played
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
 	TArray<FEffect> Effects;
 	FString EffectTypeToString(EffectType e);
 	FString EffectTargetToString(EffectTarget e);

@@ -25,7 +25,7 @@ void ACard::SetValues(const FString& name, const TArray<FEffect>& effects) {
 }
 
 const TArray<FString> ACard::EffectTypeStrings = { "Heal", "Attack" };
-const TArray<FString> ACard::EffectTargetStrings = { "Self", "Ally", "Enemy", "Any"};
+const TArray<FString> ACard::EffectTargetStrings = { "Self", "Ally", "Enemy", "Any" };
 
 FString ACard::EffectTypeToString(EffectType e) {
 	return ACard::EffectTypeStrings[(uint8)e];
@@ -48,9 +48,12 @@ const TArray<EffectTarget> ACard::GetPossibleTargets() {
 }
 
 bool ACard::IsOfType(EffectType type) {
-	for (const auto& effect : this->Effects)
-		if (effect.type == type || effect.target == EffectTarget::any)
+	UE_LOG(LogTemp, Warning, TEXT("%i"), Effects.Num())
+	for (const auto& effect : Effects) {
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *EffectTypeToString(effect.type))
+		if (effect.type == type)
 			return true;
+	}
 	return false;
 }
 
@@ -58,7 +61,11 @@ bool ACard::CanBeUsedOn(EffectTarget target) {
 	for (const auto& effect : this->Effects)
 		if (effect.target == target || effect.target == EffectTarget::any)
 			return true;
-	return false;
+
+	if (target == EffectTarget::self)
+		return CanBeUsedOn(EffectTarget::ally);
+	else
+		return false;
 }
 
 int ACard::GetSumaricEffects(EffectType type) {

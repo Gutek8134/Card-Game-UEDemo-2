@@ -28,7 +28,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	virtual void Heal(const uint8& value);
+	virtual void Heal(const uint8& value) override;
 
 	UFUNCTION(BlueprintCallable)
 		virtual void ReceiveDamage(const uint8& damage) override;
