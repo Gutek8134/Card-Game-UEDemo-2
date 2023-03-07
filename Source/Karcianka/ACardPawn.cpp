@@ -55,7 +55,7 @@ void ACardPawn::StartFight() {
 	for (const auto& e : weights) StackWeight += e;
 
 	DrawCards(HandSize);
-	UE_LOG(LogTemp, Warning, TEXT("%s"), HasCardOfType(EffectType::attack) ? *FString("Has attack card") : *FString("Doesn't have attack card"))
+	///UE_LOG(LogTemp, Warning, TEXT("%s"), HasCardOfType(EffectType::attack) ? *FString("Has attack card") : *FString("Doesn't have attack card"))
 }
 
 bool ACardPawn::HasCardOfType(EffectType type) {
@@ -64,9 +64,9 @@ bool ACardPawn::HasCardOfType(EffectType type) {
 	//else returns false after iterating over all card types in hand
 	for (const auto& [CardType, number] : this->Hand) {
 		ACard* Card = CardType.GetDefaultObject();
-		Card->OnConstruction(Card->GetTransform());
+		Card->SetValuesOnDefault();
 		bool isOfType = Card->IsOfType(type);
-		UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *Card->GetFName().ToString(), isOfType ? *FString("It's an attack card") : *FString("It's not an attack card"));
+		//UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *Card->GetFName().ToString(), isOfType ? *FString("It's an attack card") : *FString("It's not an attack card"));
 		if (isOfType)
 			return true;
 	}

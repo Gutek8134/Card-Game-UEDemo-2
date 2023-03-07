@@ -13,6 +13,10 @@ ACard::ACard() {
 	description->SetupAttachment(mesh);
 }
 
+void ACard::SetValuesOnDefault_Implementation() {
+	UE_LOG(LogTemp, Warning, L"Default values are set! Yay!")
+}
+
 ACard::ACard(const FString& name, const TArray<FEffect>& effects) {
 	this->Name = name;
 	this->Effects = effects;
@@ -48,9 +52,9 @@ const TArray<EffectTarget> ACard::GetPossibleTargets() {
 }
 
 bool ACard::IsOfType(EffectType type) {
-	UE_LOG(LogTemp, Warning, TEXT("%i"), Effects.Num())
+	//UE_LOG(LogTemp, Warning, TEXT("%i"), Effects.Num())
 	for (const auto& effect : Effects) {
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *EffectTypeToString(effect.type))
+		//UE_LOG(LogTemp, Warning, TEXT("%s"), *EffectTypeToString(effect.type))
 		if (effect.type == type)
 			return true;
 	}

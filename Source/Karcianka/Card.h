@@ -21,6 +21,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SetValues(const FString& name, const TArray<FEffect>& effects);
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		void SetValuesOnDefault();
+
 	UFUNCTION(BlueprintCallable)
 		const TArray<FEffect>& GetEffects();
 
