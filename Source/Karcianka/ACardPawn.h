@@ -97,4 +97,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class UProgressBar* ProgressBar;
+
+	UPROPERTY(BlueprintReadwrite)
+		bool bInFight;
 };

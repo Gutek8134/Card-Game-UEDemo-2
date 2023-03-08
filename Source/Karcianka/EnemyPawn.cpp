@@ -42,7 +42,17 @@ void AEnemyPawn::ReceiveDamage(const uint8& damage) {
 }
 
 void AEnemyPawn::AutoAttack() {
-	auto playerPawn = GetWorld()->GetFirstPlayerController()->GetOwner<ACardPawn>();
+	ACardPawn* playerPawn = GetWorld()->GetFirstPlayerController()->GetPawn<ACardPawn>();
+	if (GetWorld() == NULL) {
+		UE_LOG(LogTemp, Error, TEXT("World is null"));
+		return;
+	}
+
+	if (GetWorld()->GetFirstPlayerController() == NULL) {
+		UE_LOG(LogTemp, Error, TEXT("Player Controller is null"));
+		return;
+	}
+
 	if (playerPawn == NULL) {
 		UE_LOG(LogTemp, Error, TEXT("Player is null"));
 		return;
@@ -52,7 +62,7 @@ void AEnemyPawn::AutoAttack() {
 	Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
 	for (const auto& key : keys) {
-		auto card = key.GetDefaultObject();
+		auto card = GetDefaultCard(key);
 		if (card->IsOfType(EffectType::attack)) {
 			if (BestCard == NULL) {
 				BestCard = card;
@@ -62,12 +72,7 @@ void AEnemyPawn::AutoAttack() {
 			}
 		}
 	}
-	playerPawn->ReceiveDamage(BestCard->GetSumaricEffects(EffectType::attack));
-	auto BestCardClass = BestCard->StaticClass();
-	Hand[BestCardClass]-=1;
-	if (Hand[BestCardClass] == 0) {
-		Hand.Remove(BestCardClass);
-	}
+	Play(BestCard, playerPawn);
 	playerPawn->UpdateHealthBar();
 }
 
@@ -76,7 +81,7 @@ void AEnemyPawn::AutoHeal() {
 	Hand.GetKeys(keys);
 	ACard* BestCard = NULL;
 	for (const auto& key : keys) {
-		auto card = key.GetDefaultObject();
+		auto card = GetDefaultCard(key);
 		if (card->IsOfType(EffectType::heal)) {
 			if (BestCard == NULL) {
 				BestCard = card;
@@ -87,9 +92,4 @@ void AEnemyPawn::AutoHeal() {
 		}
 	}
 	Play(BestCard, this);
-	auto BestCardClass = BestCard->StaticClass();
-	--Hand[BestCardClass];
-	if (Hand[BestCardClass] == 0) {
-		Hand.Remove(BestCardClass);
-	}
 }

@@ -98,3 +98,9 @@ FString ACard::ToString() {
 	temp += EffectTypeToString(previous.type) + TEXT(" ") + EffectTargetToString(previous.target) + TEXT(" ") + FString::FromInt(previous.value) + (number == 1 ? "" : (" X " + FString::FromInt(number))) + "\n";
 	return temp;
 }
+
+ACard* GetDefaultCard(TSubclassOf<ACard> CardType) {
+	auto temp = CardType.GetDefaultObject();
+	temp->SetValuesOnDefault();
+	return temp;
+}

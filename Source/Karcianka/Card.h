@@ -43,12 +43,12 @@ public:
 
 	//Auto-description
 	UFUNCTION(BlueprintCallable)
-	FString ToString();
+		FString ToString();
 
 protected:
 	//Effects the card applies when played
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	TArray<FEffect> Effects;
+		TArray<FEffect> Effects;
 	FString EffectTypeToString(EffectType e);
 	FString EffectTargetToString(EffectTarget e);
 
@@ -62,3 +62,5 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Graphics")
 		class UTextRenderComponent* description;
 };
+
+ACard* GetDefaultCard(TSubclassOf<ACard>);

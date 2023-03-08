@@ -44,6 +44,10 @@ void ACardPawn::DrawCards(const uint8& number) {
 }
 
 void ACardPawn::StartFight() {
+	if (bInFight)
+		return;
+	bInFight = true;
+
 	// Empties stack of cards, then fills it with deck values
 	Stack.Empty();
 	Stack = Deck;
@@ -63,8 +67,7 @@ bool ACardPawn::HasCardOfType(EffectType type) {
 	//if the default card contains an effect of type, returns true
 	//else returns false after iterating over all card types in hand
 	for (const auto& [CardType, number] : this->Hand) {
-		ACard* Card = CardType.GetDefaultObject();
-		Card->SetValuesOnDefault();
+		ACard* Card = GetDefaultCard(CardType);
 		bool isOfType = Card->IsOfType(type);
 		//UE_LOG(LogTemp, Warning, TEXT("%s: %s"), *Card->GetFName().ToString(), isOfType ? *FString("It's an attack card") : *FString("It's not an attack card"));
 		if (isOfType)
