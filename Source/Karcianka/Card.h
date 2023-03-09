@@ -45,6 +45,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FString ToString();
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		uint8 APcost = 1;
+
 protected:
 	//Effects the card applies when played
 	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)

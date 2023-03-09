@@ -12,7 +12,9 @@ const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetHand() {
 }
 
 // number - of cards to draw
-void ACardPawn::DrawCards(const uint8& number) {
+void ACardPawn::DrawCards(uint8 number) {
+	if (HandWeight + number > HandSize)
+		number = HandSize - HandWeight;
 
 	// Repeated for number of times
 	for (uint8 i = 0; i < number; i++) {
@@ -39,14 +41,23 @@ void ACardPawn::DrawCards(const uint8& number) {
 			Stack.Empty();
 			Stack = Deck;
 			for (const auto& [key, value] : Hand) Stack[key] -= value;
+			TArray<uint8> weights;
+			Stack.GenerateValueArray(weights);
+			StackWeight = 0;
+			for (const auto& e : weights) StackWeight += e;
 		}
 	}
+
+	HandWeight += number;
 }
 
 void ACardPawn::StartFight() {
 	if (bInFight)
 		return;
 	bInFight = true;
+	bTurnEnded = false;
+
+	APcurrent = APstarting;
 
 	// Empties stack of cards, then fills it with deck values
 	Stack.Empty();
@@ -58,8 +69,19 @@ void ACardPawn::StartFight() {
 	StackWeight = 0;
 	for (const auto& e : weights) StackWeight += e;
 
+	HandWeight = 0;
 	DrawCards(HandSize);
 	///UE_LOG(LogTemp, Warning, TEXT("%s"), HasCardOfType(EffectType::attack) ? *FString("Has attack card") : *FString("Doesn't have attack card"))
+}
+
+void ACardPawn::StartTurn() {
+	bTurnEnded = false;
+	DrawCards(DrawnCards);
+	APcurrent += APgain;
+}
+
+void ACardPawn::EndTurn() {
+	bTurnEnded = true;
 }
 
 bool ACardPawn::HasCardOfType(EffectType type) {
@@ -84,6 +106,12 @@ int ACardPawn::GetMaxHP() {
 }
 
 void ACardPawn::Play(ACard* card, ACardPawn* target) {
+	if (card->APcost > APcurrent) {
+		IndicateNoAP(card);
+		return;
+	}
+
+
 	for (const auto& effect : card->GetEffects()) {
 		switch (effect.type) {
 		case EffectType::attack:
@@ -115,6 +143,10 @@ UProgressBar* ACardPawn::GetProgressBar() {
 
 void ACardPawn::SetProgressBar(UProgressBar* progressBar) {
 	ProgressBar = progressBar;
+}
+
+void ACardPawn::IndicateNoAP_Implementation(ACard* ExpansiveCard) {
+	UE_LOG(LogTemp, Warning, TEXT("%s: I have not enough Action Points (%i) for using %s (%i)"), *GetFName().ToString(), APcurrent, *ExpansiveCard->GetFName().ToString(), ExpansiveCard->APcost);
 }
 
 void ACardPawn::AutoHeal() {

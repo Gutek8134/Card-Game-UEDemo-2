@@ -60,7 +60,16 @@ public:
 		void StartFight();
 
 	UFUNCTION(BlueprintCallable)
-		void DrawCards(const uint8& number);
+		void StartTurn();
+
+	UFUNCTION(BlueprintCallable)
+		void EndTurn();
+
+	UPROPERTY(BlueprintReadWrite, Category = "Playstyle")
+		bool bTurnEnded;
+
+	UFUNCTION(BlueprintCallable)
+		void DrawCards(uint8 number);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats")
@@ -84,10 +93,16 @@ protected:
 		TMap<TSubclassOf<ACard>, uint8> Hand;
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
-		uint8 HandSize=5;
+		uint8 HandSize = 5;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Playstyle")
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		uint8 DrawnCards = 1;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Playstyle")
 		int32 StackWeight;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Playstyle")
+		int32 HandWeight;
 
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class UStaticMeshComponent* mesh;
@@ -100,4 +115,16 @@ protected:
 
 	UPROPERTY(BlueprintReadwrite)
 		bool bInFight;
+
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		uint8 APstarting;
+
+	UPROPERTY(EditAnywhere, Category = "Playstyle")
+		uint8 APgain;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Playstyle")
+		uint8 APcurrent;
+
+	UFUNCTION(BlueprintNativeEvent)
+		void IndicateNoAP(ACard* ExpansiveCard);
 };
