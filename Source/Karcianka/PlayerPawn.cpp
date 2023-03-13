@@ -47,3 +47,17 @@ void APlayerPawn::ReceiveDamage(const uint8& damage) {
 	if (hp <= 0)
 		Die.ExecuteIfBound();
 }
+
+void APlayerPawn::Play(ACard* card, ACardPawn* cardTarget) {
+	Super::Play(card, cardTarget);
+	UpdateAPText();
+}
+
+void APlayerPawn::UpdateAPText() {
+	APText->SetText(FText::FromString(FString::FromInt(APcurrent)));
+}
+
+void APlayerPawn::StartTurn() {
+	Super::StartTurn();
+	UpdateAPText();
+}

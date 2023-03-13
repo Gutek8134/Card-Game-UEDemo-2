@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "EnemyPawn.h"
 #include "Card.h"
+#include "Components/TextBlock.h"
 #include "PlayerPawn.generated.h"
 
 UCLASS(Blueprintable)
@@ -33,5 +34,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual void ReceiveDamage(const uint8& damage) override;
 
+	void Play(ACard* card, ACardPawn* cardTarget) override;
+	void StartTurn() override;
+
+	UFUNCTION(BlueprintCallable)
+		void UpdateAPText();
+
 	VoidDelegate Die;
+
+protected:
+	UPROPERTY(BlueprintReadWrite)
+		UTextBlock* APText;
 };

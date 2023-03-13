@@ -105,7 +105,7 @@ int ACardPawn::GetMaxHP() {
 	return maxHP;
 }
 
-void ACardPawn::Play(ACard* card, ACardPawn* target) {
+void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
 	if (card->APcost > APcurrent) {
 		IndicateNoAP(card);
 		return;
@@ -115,14 +115,14 @@ void ACardPawn::Play(ACard* card, ACardPawn* target) {
 	for (const auto& effect : card->GetEffects()) {
 		switch (effect.type) {
 		case EffectType::attack:
-			target->ReceiveDamage(effect.value);
+			cardTarget->ReceiveDamage(effect.value);
 			break;
 		case EffectType::heal:
-			target->Heal(effect.value);
+			cardTarget->Heal(effect.value);
 			break;
 		}
 	}
-	target->UpdateHealthBar();
+	cardTarget->UpdateHealthBar();
 
 	UClass* cardClass = card->GetClass();
 	Hand[cardClass] -= 1;

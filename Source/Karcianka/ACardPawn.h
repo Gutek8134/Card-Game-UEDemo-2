@@ -38,7 +38,7 @@ public:
 		virtual void AutoAttack();
 
 	UFUNCTION(BlueprintCallable)
-		void Play(ACard* card, ACardPawn* target);
+		virtual void Play(ACard* card, ACardPawn* cardTarget);
 
 	UFUNCTION(BlueprintCallable)
 		int GetHP();
@@ -60,7 +60,7 @@ public:
 		void StartFight();
 
 	UFUNCTION(BlueprintCallable)
-		void StartTurn();
+		virtual void StartTurn();
 
 	UFUNCTION(BlueprintCallable)
 		void EndTurn();
