@@ -71,6 +71,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void DrawCards(uint8 number);
 
+	UFUNCTION(BlueprintCallable)
+		bool EnoughAPToPlay(ACard* card);
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats")
 		int hp;
