@@ -33,3 +33,9 @@ void AHandHandler::PositionCards() {
 		PlacedCards[i]->SetActorLocation(GetActorLocation() + FVector(newPositions[i], 0, 0));
 	}
 }
+
+TMap<TSubclassOf<ACard>, uint8> AHandHandler::GetCardsToSpawn(TMap<TSubclassOf<ACard>, uint8> hand) {
+	for (const auto& el : PlacedCards)
+		hand[el->GetClass()] -= 1;
+	return hand;
+}

@@ -82,7 +82,7 @@ int ACard::GetSumaricEffects(EffectType type) {
 }
 
 FString ACard::ToString() {
-	FString temp = this->Name + ":\n";
+	FString temp = "((" + FString::FromInt(APcost) + "))\n" + this->Name + ":\n";
 	TArray<TPair<FEffect, uint8>> count;
 
 	FEffect previous = Effects[0];

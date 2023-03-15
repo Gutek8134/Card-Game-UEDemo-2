@@ -14,6 +14,7 @@
 UCLASS(MinimalAPI, NotBlueprintable)
 class ACardPawn : public APawn, public IFight {
 	GENERATED_BODY()
+
 public:
 	UFUNCTION(BlueprintCallable)
 		const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
@@ -73,6 +74,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		bool EnoughAPToPlay(ACard* card);
+
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Stats")

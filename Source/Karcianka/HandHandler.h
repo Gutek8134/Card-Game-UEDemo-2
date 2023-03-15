@@ -26,4 +26,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
 		int stepBase=300;
 
+	UFUNCTION(BlueprintCallable)
+		TMap<TSubclassOf<ACard>, uint8> GetCardsToSpawn(TMap<TSubclassOf<ACard>, uint8> hand);
 };

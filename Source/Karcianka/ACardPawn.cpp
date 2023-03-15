@@ -106,7 +106,7 @@ int ACardPawn::GetMaxHP() {
 }
 
 void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
-	if (EnoughAPToPlay(card)) {
+	if (!EnoughAPToPlay(card)) {
 		IndicateNoAP(card);
 		return;
 	}
@@ -129,6 +129,7 @@ void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
 	if (Hand[cardClass] <= 0)
 		Hand.Remove(cardClass);
 
+	HandWeight--;
 	APcurrent -= card->APcost;
 }
 
@@ -148,7 +149,7 @@ void ACardPawn::SetProgressBar(UProgressBar* progressBar) {
 }
 
 bool ACardPawn::EnoughAPToPlay(ACard* card) {
-	return card->APcost > APcurrent;
+	return card->APcost < APcurrent;
 }
 
 void ACardPawn::IndicateNoAP_Implementation(ACard* ExpansiveCard) {
