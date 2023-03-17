@@ -45,7 +45,7 @@ void APlayerPawn::Heal(const uint8& value) {
 void APlayerPawn::ReceiveDamage(const uint8& damage) {
 	hp -= damage;
 	if (hp <= 0)
-		Die.ExecuteIfBound();
+		Die();
 }
 
 void APlayerPawn::Play(ACard* card, ACardPawn* cardTarget) {
@@ -60,4 +60,8 @@ void APlayerPawn::UpdateAPText() {
 void APlayerPawn::StartTurn() {
 	Super::StartTurn();
 	UpdateAPText();
+}
+
+void APlayerPawn::Die_Implementation() {
+
 }

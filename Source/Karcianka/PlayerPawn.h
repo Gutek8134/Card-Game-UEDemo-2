@@ -40,7 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateAPText();
 
-	VoidDelegate Die;
+	UFUNCTION(BlueprintNativeEvent)
+	void Die();
 
 protected:
 	UPROPERTY(BlueprintReadWrite)
