@@ -3,14 +3,6 @@
 
 #include "ACardPawn.h"
 
-const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetDeck() {
-	return this->Deck;
-}
-
-const TMap<TSubclassOf<ACard>, uint8>& ACardPawn::GetHand() {
-	return this->Hand;
-}
-
 // number - of cards to draw
 void ACardPawn::DrawCards(uint8 number) {
 	if (HandWeight + number > HandSize)

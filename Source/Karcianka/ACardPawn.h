@@ -17,11 +17,6 @@ class ACardPawn : public APawn, public IFight {
 
 public:
 	UFUNCTION(BlueprintCallable)
-		const TMap<TSubclassOf<ACard>, uint8>& GetDeck();
-	UFUNCTION(BlueprintCallable)
-		const TMap<TSubclassOf<ACard>, uint8>& GetHand();
-
-	UFUNCTION(BlueprintCallable)
 		bool HasCardOfType(EffectType type);
 
 	//Overriden from IFight, used to receive outside healing
@@ -82,19 +77,19 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Stats")
 		int maxHP;
 	//A list of statuses currently affecting entity
-	UPROPERTY(VisibleAnywhere, Category = "Stats")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
 		TMap<FEffect, int> statuses;
 
 	//Holds type and number of cards in deck
-	UPROPERTY(EditAnywhere, Category = "Playstyle")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Deck;
 
 	//Holds the current stack of cards from which player can draw
-	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Stack;
 
 	//Holds type and number of cards in current hand
-	UPROPERTY(VisibleAnywhere, Category = "Playstyle")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Hand;
 
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
