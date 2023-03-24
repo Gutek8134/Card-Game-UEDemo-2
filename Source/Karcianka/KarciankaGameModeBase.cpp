@@ -11,7 +11,7 @@ TArray<TSubclassOf<ACard>> AKarciankaGameModeBase::FGenerateRandomObtainableCard
 	// Number must be lesser or equal than the number of card types
 	if (ObtainableCards.Num() < number) {
 		UE_LOG(LogTemp, Error, TEXT("Game mode/Generate random obtainable cards: too much cards to generate (%i/%i)"), number, ObtainableCards.Num());
-		throw std::invalid_argument("Number is too high");
+		return TArray<TSubclassOf<ACard>>();
 	}
 	// If it is equal, all types are returned
 	else if (ObtainableCards.Num() == number) {
@@ -28,7 +28,7 @@ TArray<TSubclassOf<ACard>> AKarciankaGameModeBase::FGenerateRandomObtainableCard
 	
 	
 	for (auto i = 0; i < number; ++i) {
-		auto rnd = FMath::FRandRange(0, cardsWeight);
+		uint16 rnd = FMath::RandRange(0, cardsWeight);
 		
 		// Ensures every card will appear only once
 		for (const auto [key, value] : ObtainableCopy) {
@@ -60,7 +60,7 @@ void AKarciankaGameModeBase::GenerateRandomObtainableCards(TArray<TSubclassOf<AC
 
 
 	for (auto i = 0; i < number; ++i) {
-		auto rnd = FMath::FRandRange(0, cardsWeight);
+		uint16 rnd = FMath::RandRange(0, cardsWeight);
 
 		// Ensures every card will appear only once
 		for (const auto [key, value] : ObtainableCopy) {
