@@ -21,6 +21,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void PositionCards();
+	
+	UFUNCTION(BlueprintCallable)
+		void TogglePlacedCardsVisibility();
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
@@ -28,4 +31,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 		TMap<TSubclassOf<ACard>, uint8> GetCardsToSpawn(TMap<TSubclassOf<ACard>, uint8> hand);
+
+	UPROPERTY(BlueprintReadOnly)
+		bool bSpawnCardsHidden = false;
 };

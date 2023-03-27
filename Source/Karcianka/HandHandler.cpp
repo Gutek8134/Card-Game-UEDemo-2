@@ -11,6 +11,13 @@ AHandHandler::AHandHandler()
 
 }
 
+void AHandHandler::TogglePlacedCardsVisibility() {
+	bSpawnCardsHidden = !bSpawnCardsHidden;
+	for (const auto& el : PlacedCards) {
+		el->SetActorHiddenInGame(bSpawnCardsHidden);
+	}
+}
+
 void AHandHandler::PositionCards() {
 	TArray<float> newPositions;
 	newPositions.Init(0, PlacedCards.Num());

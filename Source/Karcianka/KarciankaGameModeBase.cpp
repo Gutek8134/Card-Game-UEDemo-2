@@ -21,6 +21,7 @@ TArray<TSubclassOf<ACard>> AKarciankaGameModeBase::FGenerateRandomObtainableCard
 	}
 
 
+	UE_LOG(LogTemp, Warning, TEXT("%i"), number)
 	TArray<TSubclassOf<ACard>> temp;
 	
 	auto cardsWeight = GetObtainableCardsWeight();
@@ -36,6 +37,7 @@ TArray<TSubclassOf<ACard>> AKarciankaGameModeBase::FGenerateRandomObtainableCard
 				temp.Add(key);
 				cardsWeight -= ObtainableCopy[key];
 				ObtainableCopy.Remove(key);
+				break;
 			}
 			else rnd -= value;
 		}
