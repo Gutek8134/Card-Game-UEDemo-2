@@ -7,6 +7,7 @@
 #include "FightInterface.h"
 #include "Card.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 #include "MyPlayerState.h"
 #include "ACardPawn.generated.h"
 
@@ -112,6 +113,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Graphics")
 		class UProgressBar* ProgressBar;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Graphics")
+		class UTextBlock* HPText;
 
 	UPROPERTY(BlueprintReadwrite)
 		bool bInFight;

@@ -105,16 +105,23 @@ void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
 
 
 	for (const auto& effect : card->GetEffects()) {
+		ACardPawn* target;
+		if (effect.target == EffectTarget::self)
+			target = this;
+		else
+			target = cardTarget;
+
 		switch (effect.type) {
 		case EffectType::attack:
-			cardTarget->ReceiveDamage(effect.value);
+			target->ReceiveDamage(effect.value);
 			break;
 		case EffectType::heal:
-			cardTarget->Heal(effect.value);
+			target->Heal(effect.value);
 			break;
 		}
 	}
 	cardTarget->UpdateHealthBar();
+	UpdateHealthBar();
 
 	UClass* cardClass = card->GetClass();
 	Hand[cardClass] -= 1;
@@ -126,10 +133,11 @@ void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
 }
 
 void ACardPawn::UpdateHealthBar() {
-	if (ProgressBar == NULL)
+	if (ProgressBar == NULL || HPText == NULL)
 		return;
 
 	ProgressBar->SetPercent((float)hp / (float)maxHP);
+	HPText->SetText(FText::FromString(FString::FromInt(hp)+"/"+FString::FromInt(maxHP)));
 }
 
 UProgressBar* ACardPawn::GetProgressBar() {

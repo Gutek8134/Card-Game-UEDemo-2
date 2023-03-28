@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "EnemyPawn.h"
 #include "Card.h"
-#include "Components/TextBlock.h"
 #include "PlayerPawn.generated.h"
 
 UCLASS(Blueprintable)
