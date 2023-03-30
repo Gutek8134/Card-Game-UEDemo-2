@@ -26,4 +26,6 @@ public:
 		virtual void ReceiveDamage(const uint8& damage) = 0;
 	UFUNCTION(BlueprintCallable)
 		virtual void Heal(const uint8& value) = 0;
+	UFUNCTION(BlueprintCallable)
+		virtual void GainAP(const uint8& value) = 0;
 };

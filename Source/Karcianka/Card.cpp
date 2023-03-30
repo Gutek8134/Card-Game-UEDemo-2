@@ -28,7 +28,7 @@ void ACard::SetValues(const FString& name, const TArray<FEffect>& effects) {
 	description->Text = FText::FromString(this->ToString());
 }
 
-const TArray<FString> ACard::EffectTypeStrings = { "Heal", "Attack" };
+const TArray<FString> ACard::EffectTypeStrings = { "Heal", "Attack", "Gain AP" };
 const TArray<FString> ACard::EffectTargetStrings = { "Self", "Ally", "Enemy", "Any" };
 
 FString ACard::EffectTypeToString(EffectType e) {

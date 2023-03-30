@@ -26,6 +26,8 @@ public:
 	//Overriden from IFight, used to receive outside damage
 	virtual void ReceiveDamage(const uint8& damage) override;
 
+	virtual void GainAP(const uint8& value) override;
+
 	//Automatic self-targeted heal
 	UFUNCTION(BlueprintCallable)
 		virtual void AutoHeal();

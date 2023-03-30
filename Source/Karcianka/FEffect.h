@@ -8,6 +8,7 @@ UENUM(BlueprintType)
 enum class EffectType : uint8 {
 	heal,
 	attack,
+	gainAP,
 };
 
 UENUM(BlueprintType)

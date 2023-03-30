@@ -118,6 +118,9 @@ void ACardPawn::Play(ACard* card, ACardPawn* cardTarget) {
 		case EffectType::heal:
 			target->Heal(effect.value);
 			break;
+		case EffectType::gainAP:
+			target->GainAP(effect.value);
+			break;
 		}
 	}
 	cardTarget->UpdateHealthBar();
@@ -170,4 +173,8 @@ void ACardPawn::Heal(const uint8& damage) {
 
 void ACardPawn::ReceiveDamage(const uint8& damage) {
 	UE_LOG(LogTemp, Error, TEXT("Receive Damage: Don't use ACardPawn by itself, it's supposed to be abstract class"));
+}
+
+void ACardPawn::GainAP(const uint8& value) {
+	UE_LOG(LogTemp, Error, TEXT("Gain AP: Don't use ACardPawn by itself, it's supposed to be abstract class"));
 }

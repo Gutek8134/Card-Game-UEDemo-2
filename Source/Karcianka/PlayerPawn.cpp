@@ -48,6 +48,11 @@ void APlayerPawn::ReceiveDamage(const uint8& damage) {
 		Die();
 }
 
+void APlayerPawn::GainAP(const uint8& value) {
+	APcurrent += value;
+	UpdateAPText();
+}
+
 void APlayerPawn::Play(ACard* card, ACardPawn* cardTarget) {
 	Super::Play(card, cardTarget);
 	UpdateAPText();

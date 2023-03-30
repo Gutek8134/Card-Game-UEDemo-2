@@ -33,6 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		virtual void ReceiveDamage(const uint8& damage) override;
 
+	virtual void GainAP(const uint8& value) override;
+
 	void Play(ACard* card, ACardPawn* cardTarget) override;
 	void StartTurn() override;
 
