@@ -152,7 +152,7 @@ void ACardPawn::SetProgressBar(UProgressBar* progressBar) {
 }
 
 bool ACardPawn::EnoughAPToPlay(ACard* card) {
-	return card->APcost < APcurrent;
+	return card->APcost <= APcurrent;
 }
 
 void ACardPawn::IndicateNoAP_Implementation(ACard* ExpansiveCard) {
