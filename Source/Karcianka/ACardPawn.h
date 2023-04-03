@@ -75,9 +75,9 @@ public:
 
 
 protected:
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 		int hp;
-	UPROPERTY(EditAnywhere, Category = "Stats")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 		int maxHP;
 	//A list of statuses currently affecting entity
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Stats")
@@ -95,10 +95,10 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		TMap<TSubclassOf<ACard>, uint8> Hand;
 
-	UPROPERTY(EditAnywhere, Category = "Playstyle")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		uint8 HandSize = 5;
 
-	UPROPERTY(EditAnywhere, Category = "Playstyle")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Playstyle")
 		uint8 DrawnCards = 1;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Playstyle")
@@ -128,7 +128,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Playstyle")
 		uint8 APgain;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Playstyle")
+	UPROPERTY(BlueprintReadWrite, Category = "Playstyle")
 		uint8 APcurrent;
 
 	UFUNCTION(BlueprintNativeEvent)
