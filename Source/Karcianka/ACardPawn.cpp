@@ -61,6 +61,7 @@ void ACardPawn::StartFight() {
 	StackWeight = 0;
 	for (const auto& e : weights) StackWeight += e;
 
+	Hand.Empty();
 	HandWeight = 0;
 	DrawCards(HandSize);
 	///UE_LOG(LogTemp, Warning, TEXT("%s"), HasCardOfType(EffectType::attack) ? *FString("Has attack card") : *FString("Doesn't have attack card"))
