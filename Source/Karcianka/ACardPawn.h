@@ -71,6 +71,12 @@ public:
 		void DrawCards(uint8 number);
 
 	UFUNCTION(BlueprintCallable)
+		void DiscardCards(ACard* card, uint8 number);
+
+	UFUNCTION(BlueprintCallable)
+		void DiscardCardsOfClass(TSubclassOf<ACard> cardType, uint8 number);
+
+	UFUNCTION(BlueprintCallable)
 		bool EnoughAPToPlay(ACard* card);
 
 

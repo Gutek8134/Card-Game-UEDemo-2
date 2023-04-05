@@ -43,6 +43,21 @@ void ACardPawn::DrawCards(uint8 number) {
 	HandWeight += number;
 }
 
+void ACardPawn::DiscardCardsOfClass(TSubclassOf<ACard> cardType, uint8 number){
+	HandWeight -= (number <= Hand[cardType]) ? number : Hand[cardType];
+	Hand[cardType] -= number;
+	if (Hand[cardType] <= 0)
+		Hand.Remove(cardType);
+}
+
+void ACardPawn::DiscardCards(ACard* card, uint8 number) {
+	auto cardType = card->GetClass();
+	HandWeight -= (number <= Hand[cardType]) ? number : Hand[cardType];
+	Hand[cardType] -= number;
+	if (Hand[cardType] <= 0)
+		Hand.Remove(cardType);
+}
+
 void ACardPawn::StartFight() {
 	if (bInFight)
 		return;
